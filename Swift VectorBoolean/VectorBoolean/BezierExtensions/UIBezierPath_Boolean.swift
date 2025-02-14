@@ -45,12 +45,20 @@ public extension UIBezierPath {
 
   // 42
   //- (NSBezierPath *) fb_xor:(NSBezierPath *)path
+  /// TODO: xorWithBezierGraph has bugs with circle and rectangle. Temporarily replaced by mutual difference
   @objc func fb_xor(_ path: UIBezierPath) -> UIBezierPath {
-    let thisGraph = FBBezierGraph(path: self)
-    let otherGraph = FBBezierGraph(path: path)
-    let result = thisGraph.xorWithBezierGraph(otherGraph).bezierPath
-    result.fb_copyAttributesFrom(self)
-    return result
+    
+    
+    // let thisGraph = FBBezierGraph(path: self)
+    // let otherGraph = FBBezierGraph(path: path)
+    // let result = thisGraph.xorWithBezierGraph(otherGraph).bezierPath
+    // result.fb_copyAttributesFrom(self)
+    // return result
+    
+    let pathA = self.fb_difference(path)
+    let pathB = path.fb_difference(self)
+    pathA.append(pathB)
+    return pathA
   }
 
 }
